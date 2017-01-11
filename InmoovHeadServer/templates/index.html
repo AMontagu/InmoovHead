@@ -23,6 +23,16 @@
 <script src="{% static 'js/cookie.js' %}"></script>
 <script>
     jQuery(function ($) {
+
+        socket = new WebSocket("ws://" + window.location.host + "/ws/tts/");
+socket.onmessage = function(e) {
+    console.log(e.data);
+}
+socket.onopen = function() {
+    socket.send(JSON.stringify({message:"hello world"}));
+}
+// Call onopen directly if socket is already open
+if (socket.readyState == WebSocket.OPEN) socket.onopen();
         var csrftoken = Cookies.get('csrftoken');
         console.log(csrftoken);
 
