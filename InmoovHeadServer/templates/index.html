@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>{{ bonjour }}</h1>
+
+{% for user in listUser %}
+    <div><p>{{ user }}</p></div>
+{% endfor %}
+
+{% for robot in robots %}
+    <div><p>{{ robot.name }} {{ robot.serialNumer }}</p></div>
+{% endfor %}
+
+<button type="button" id="sendA">Send A</button>
+<button type="button" id="sendZ">Send Z</button>
+
+{% load static from staticfiles %}
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/cookie.js' %}"></script>
+<script>
+    jQuery(function ($) {
+        var csrftoken = Cookies.get('csrftoken');
+        console.log(csrftoken);
+
+        $(function () {
+            $.ajaxSettings.traditional = true;
+            $.ajaxSetup({
+                headers: {"X-CSRFToken": csrftoken}
+            });
+        });
+        function ajaxLauncher(url, data, successCallback) {
+            $.ajax({
+                type: 'POST',
+                url: url,
+                headers: {
+                    Accept: "*/*",
+                },
+                data: data,
+                success: successCallback,
+                error: function (err) {
+                    alert(err.responseText);
+                    console.log(err);
+                }
+            });
+        }
+
+        $("#sendA").on("click", function () {
+           ajaxLauncher("/arduino/", {command:"a"}, function () {
+               console.log("success");
+           })
+        });
+
+        $("#sendZ").on("click", function () {
+           ajaxLauncher("/arduino/", {command:"z"}, function () {
+               console.log("success");
+           })
+        });
+
+    });
+</script>
+
+</body>
+</html>
