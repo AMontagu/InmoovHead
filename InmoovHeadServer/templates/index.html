@@ -1,7 +1,10 @@
-{% extends "base.html" %}
-{% load i18n %}
-
-{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
 <h1>{{ bonjour }}</h1>
 
 {% for user in listUser %}
@@ -70,4 +73,5 @@ if (socket.readyState == WebSocket.OPEN) socket.onopen();
     });
 </script>
 
-{% endblock %}
+</body>
+</html>

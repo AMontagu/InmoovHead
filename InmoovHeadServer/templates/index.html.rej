@@ -1,0 +1,10 @@
+diff a/InmoovHeadServer/templates/index.html b/InmoovHeadServer/templates/index.html	(rejected hunks)
+@@ -70,5 +70,4 @@
+     });
+ </script>
+ 
+-</body>
+-</html>
+\ No newline at end of file
++{% endblock %}
+\ No newline at end of file

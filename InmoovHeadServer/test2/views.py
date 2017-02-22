@@ -27,7 +27,6 @@ def home(request):
 	robots = Robot.objects.all()
 	return render(request, 'index.html', locals())
 
-
 """class RobotList(APIView):
 	def get(self, request, format=None):
 		robots = Robot.objects.all()
