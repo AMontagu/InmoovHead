@@ -1,4 +1,7 @@
 import time
+
+from django.contrib.auth import logout, authenticate
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from rest_framework import generics
@@ -13,10 +16,10 @@ from rest_framework.views import APIView
 
 from test2.models import Robot
 from test2.serializer import RobotSerializer
-
 from test2.term import SerialCom
 
 
+@login_required
 def home(request):
 	bonjour = "BONJOUR"
 	listUser = ["pierre", "paul", "jean", "blabla"]
@@ -26,6 +29,23 @@ def home(request):
 	robot.save()"""
 	robots = Robot.objects.all()
 	return render(request, 'index.html', locals())
+
+@login_required
+def actions(request):
+	return render(request, 'actions.html', locals())
+
+@login_required
+def tts(request):
+	return render(request, 'tts.html', locals())
+
+@login_required
+def movement(request):
+	return render(request, 'movement.html', locals())
+
+@login_required
+def recoVocale(request):
+	return render(request, 'recoVocale.html', locals())
+
 
 
 """class RobotList(APIView):

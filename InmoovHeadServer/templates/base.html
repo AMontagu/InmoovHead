@@ -1,0 +1,22 @@
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    {% include "shared/headers.html" %}
+    {% block header %}{% endblock %}
+</head>
+
+<body>
+    {% include "shared/navbar.html" %}
+
+    <div id="content">
+    {% block content %}{% endblock %}
+    </div>
+
+    {% include "shared/scripts.html" %}
+    {% block script %}{% endblock %}
+</body>
+
+</html>
