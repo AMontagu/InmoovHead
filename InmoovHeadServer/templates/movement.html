@@ -2,6 +2,69 @@
 
 {% block content %}
 
-<h1>Movement</h1>
+    <h1>Movement</h1>
+
+    <div class="col-md-6">
+        <h1>Base</h1>
+        <div class="row">
+          <div class="col-xs-4 containBtnMove">
+            <button id="rotateLeft" type="button" data-movement="rotate-left"
+                    class="btn btn-default btn-sm btnArrow">
+              <span class="glyphicon glyphicon-repeat" aria-hidden="true"></span>
+            </button>
+          </div>
+          <div class="col-xs-4 containBtnMove">
+            <button id="moveForward" type="button" data-movement="up" class="btn btn-default btn-sm btnArrow">
+              <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
+            </button>
+          </div>
+          <div class="col-xs-4 containBtnMove">
+            <button id="rotateRight" type="button" data-movement="rotate-right"
+                    class="btn btn-default btn-sm btnArrow">
+              <span class="glyphicon glyphicon-repeat" aria-hidden="true"></span>
+            </button>
+          </div>
+        </div>
+
+        <div class="row marginT30">
+          <div class="col-xs-4 containBtnMove">
+            <button id="translateLeft" type="button" data-movement="left"
+                    class="btn btn-default btn-sm btnArrow">
+              <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+            </button>
+          </div>
+          <div class="col-xs-4 containBtnMove"></div>
+          <div class="col-xs-4 containBtnMove">
+            <button id="translateRight" type="button" data-movement="right"
+                    class="btn btn-default btn-sm btnArrow">
+              <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+            </button>
+          </div>
+        </div>
+
+        <div class="row marginT30">
+          <div class="col-xs-4 containBtnMove">
+          </div>
+          <div class="col-xs-4 containBtnMove">
+            <button id="moveBackward" type="button" data-movement="down"
+                    class="btn btn-default btn-sm btnArrow">
+              <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
+            </button>
+          </div>
+          <div class="col-xs-4 containBtnMove">
+          </div>
+        </div>
+
+        <div class="row marginT50">
+          <div class="col-xs-12 txtAlignC">
+            <input id="speedText" type="text" size=4>
+            <div class="speedSlider marginT30">
+              <p class="sliderElement">100</p>
+              <input id="speedSlider" type="range" class="sliderLoga sliderElement" min="100" max="1000" step="10">
+              <p class="sliderElement">1000</p>
+            </div>
+          </div>
+        </div>
+      </div>
 
 {% endblock %}
