@@ -4,21 +4,19 @@
 
 <head>
     <title>{% block title %}{% endblock %}</title>
+    {% include "shared/headers.html" %}
+    {% block header %}{% endblock %}
 </head>
 
 <body>
-    <div id="header">
-    {% block header %}{% endblock %}
-    </div>
+    {% include "shared/navbar.html" %}
 
     <div id="content">
     {% block content %}{% endblock %}
     </div>
 
-    <div id="footer">
-    {% block footer %}
-    {% endblock %}
-    </div>
+    {% include "shared/scripts.html" %}
+    {% block script %}{% endblock %}
 </body>
 
 </html>

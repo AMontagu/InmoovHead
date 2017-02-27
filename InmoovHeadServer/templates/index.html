@@ -1,11 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<h1>{{ bonjour }}</h1>
+{% extends "base.html" %}
+
+{% block title %}
+<title>Home</title>
+{% endblock %}
+
+{% block content %}
+
+<h1>Home</h1>
+
+    <h1>{{ bonjour }}</h1>
 
 {% for user in listUser %}
     <div><p>{{ user }}</p></div>
@@ -18,9 +21,9 @@
 <button type="button" id="sendA">Send A</button>
 <button type="button" id="sendZ">Send Z</button>
 
-{% load static from staticfiles %}
-<script src="{% static 'js/jquery.min.js' %}"></script>
-<script src="{% static 'js/cookie.js' %}"></script>
+{% endblock %}
+
+{% block script %}
 <script>
     jQuery(function ($) {
 
@@ -73,5 +76,6 @@ if (socket.readyState == WebSocket.OPEN) socket.onopen();
     });
 </script>
 
-</body>
-</html>
+{% endblock %}
+
+

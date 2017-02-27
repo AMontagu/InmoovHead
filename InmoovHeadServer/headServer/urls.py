@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from rest_framework import routers
+from django.contrib.auth import views as auth_views
 
 from test2 import views
 
@@ -24,9 +25,15 @@ router.register(r'robots', views.RobotViewSet)
 
 urlpatterns = [
     url(r'^$', views.home),
+    url(r'^home/$', views.home),
+    url(r'^actions/$', views.actions),
+    url(r'^tts/$', views.tts),
+    url(r'^movement/$', views.movement),
+    url(r'^recoVocale/$', views.recoVocale),
     url(r'^admin/', admin.site.urls),
     url(r'^arduino/', views.apiArduino),
     url(r'^', include(router.urls)),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^accounts/logout/$', auth_views.logout, {'next_page': '/accounts/login/'}),
     url(r'^accounts/', include('django.contrib.auth.urls')),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]
