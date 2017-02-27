@@ -1,3 +1,18 @@
 .navbar{
   background-color: transparent;
 }
+
+.containBtnMove{
+  text-align: center;
+}
+
+.btnArrow{
+  height: auto;
+  min-height: 100px;
+  width: 50%;
+  font-size: 25px;
+}
+
+.sliderElement{
+  display: inline-block;
+}

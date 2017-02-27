@@ -6,74 +6,73 @@
 
 {% block content %}
 
-<h1>Home</h1>
+    <h1>Home</h1>
 
     <h1>{{ bonjour }}</h1>
 
-{% for user in listUser %}
-    <div><p>{{ user }}</p></div>
-{% endfor %}
+    {% for user in listUser %}
+        <div><p>{{ user }}</p></div>
+    {% endfor %}
 
-{% for robot in robots %}
-    <div><p>{{ robot.name }} {{ robot.serialNumer }}</p></div>
-{% endfor %}
+    {% for robot in robots %}
+        <div><p>{{ robot.name }} {{ robot.serialNumer }}</p></div>
+    {% endfor %}
 
-<button type="button" id="sendA">Send A</button>
-<button type="button" id="sendZ">Send Z</button>
+    <button type="button" id="sendA">Send A</button>
+    <button type="button" id="sendZ">Send Z</button>
 
 {% endblock %}
 
 {% block script %}
-<script>
-    jQuery(function ($) {
+    <script>
+        jQuery(function ($) {
 
-        socket = new WebSocket("ws://" + window.location.host + "/ws/tts/");
-socket.onmessage = function(e) {
-    console.log(e.data);
-}
-socket.onopen = function() {
-    socket.send(JSON.stringify({message:"hello world"}));
-}
-// Call onopen directly if socket is already open
-if (socket.readyState == WebSocket.OPEN) socket.onopen();
-        var csrftoken = Cookies.get('csrftoken');
-        console.log(csrftoken);
+            socket = new WebSocket("ws://" + window.location.host + "/ws/tts/");
+            socket.onmessage = function(e) {
+                console.log(e.data);
+            };
+            socket.onopen = function() {
+                socket.send(JSON.stringify({message:"hello world"}));
+            };
 
-        $(function () {
-            $.ajaxSettings.traditional = true;
-            $.ajaxSetup({
-                headers: {"X-CSRFToken": csrftoken}
+            var csrftoken = Cookies.get('csrftoken');
+            console.log(csrftoken);
+
+            $(function () {
+                $.ajaxSettings.traditional = true;
+                $.ajaxSetup({
+                    headers: {"X-CSRFToken": csrftoken}
+                });
             });
-        });
-        function ajaxLauncher(url, data, successCallback) {
-            $.ajax({
-                type: 'POST',
-                url: url,
-                headers: {
-                    Accept: "*/*",
-                },
-                data: data,
-                success: successCallback,
-                error: function (err) {
-                    alert(err.responseText);
-                    console.log(err);
-                }
+            function ajaxLauncher(url, data, successCallback) {
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    headers: {
+                        Accept: "*/*",
+                    },
+                    data: data,
+                    success: successCallback,
+                    error: function (err) {
+                        alert(err.responseText);
+                        console.log(err);
+                    }
+                });
+            }
+
+            $("#sendA").on("click", function () {
+               ajaxLauncher("/arduino/", {command:"a"}, function () {
+                   console.log("success");
+               })
             });
-        }
 
-        $("#sendA").on("click", function () {
-           ajaxLauncher("/arduino/", {command:"a"}, function () {
-               console.log("success");
-           })
+            $("#sendZ").on("click", function () {
+               ajaxLauncher("/arduino/", {command:"z"}, function () {
+                   console.log("success");
+               })
+            });
+
         });
-
-        $("#sendZ").on("click", function () {
-           ajaxLauncher("/arduino/", {command:"z"}, function () {
-               console.log("success");
-           })
-        });
-
-    });
 </script>
 
 {% endblock %}
