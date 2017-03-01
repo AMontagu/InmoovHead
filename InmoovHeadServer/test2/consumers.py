@@ -20,6 +20,7 @@ class TtsJsonConsumer(JsonWebsocketConsumer):
 
 	def connect(self, message, **kwargs):
 		print("connect Chat json")
+		self.message.reply_channel.send({"accept": True})
 
 	def receive(self, content, **kwargs):
 		print("receive Chat json :")
@@ -39,6 +40,7 @@ def ws_add(message):
 	print("add not in hease protocole :")
 	print(message.content)
 	print(message.reply_channel)
+	self.message.reply_channel.send({"accept": False})
 
 
 # Connected to websocket.disconnect
