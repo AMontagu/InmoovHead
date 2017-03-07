@@ -1,3 +1,5 @@
+import os
+
 import pygame as pg
 from gtts import gTTS
 
@@ -31,6 +33,9 @@ class Tts:
         pg.mixer.music.play()
         while pg.mixer.music.get_busy():
             clock.tick(100)
+        pg.mixer.music.stop()
+        pg.mixer.quit()
+        # os.remove(self.tts_file)
 
     def createSpeech(self):
         tts = gTTS(self.text, self.lang)

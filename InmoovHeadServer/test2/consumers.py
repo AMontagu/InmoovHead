@@ -1,5 +1,5 @@
 import json
-
+from testSpeech.Tts import Tts
 from channels import Group
 from channels.generic.websockets import JsonWebsocketConsumer
 
@@ -25,6 +25,10 @@ class TtsJsonConsumer(JsonWebsocketConsumer):
 	def receive(self, content, **kwargs):
 		print("receive Chat json :")
 		print(content)
+		tts = Tts("tts.mp3", content['data'], "fr")
+		tts.createSpeech()
+		tts.play_music(0.7)
+
 
 		self.send("bla self")
 
@@ -40,7 +44,7 @@ def ws_add(message):
 	print("add not in hease protocole :")
 	print(message.content)
 	print(message.reply_channel)
-	self.message.reply_channel.send({"accept": False})
+	message.reply_channel.send({"accept": False})
 
 
 # Connected to websocket.disconnect
