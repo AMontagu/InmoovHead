@@ -3,5 +3,39 @@
 {% block content %}
 
     <h1>Text To Speech</h1>
+    <div class="col-md-6">
+        <div class="row">
+            <textarea id="textarea" class="form-group"></textarea>
+            <br><br>
+            <button id="send" type="button" class="btn btn-secondary"> Send </button>
+
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block script %}
+    <script>
+        jQuery(function ($) {
+
+            var socket = new WebSocket("ws://" + window.location.host + "/ws/tts/");
+            socket.onmessage = function (e) {
+                console.log(e.data);
+            };
+            socket.onopen = function () {
+                 console.log("socket open");
+            };
+             $("#send").on("click", function () {
+                 var obj = {data: $("#textarea").val()};
+                 console.log(obj);
+                 console.log(JSON.stringify(obj));
+                socket.send(JSON.stringify(obj));
+             });
+
+            });
+
+
+</script>
 
 {% endblock %}
