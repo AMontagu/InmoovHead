@@ -68,3 +68,43 @@
       </div>
 
 {% endblock %}
+
+{% block script %}
+    <script>
+        jQuery(function ($) {
+
+            var socket = new WebSocket("ws://" + window.location.host + "/ws/movement/");
+            socket.onmessage = function (e) {
+                console.log(e.data);
+            };
+            socket.onopen = function () {
+                 console.log("socket open");
+            };
+             $("#moveForward").on("click", function () {
+                 var obj = {data: "MoveForward"};
+                 console.log(obj);
+                 console.log(JSON.stringify(obj));
+                socket.send(JSON.stringify(obj));
+             });
+             $("#moveForward").on("click", function () {
+                 var obj = {data: "MoveForward"};
+                 console.log(obj);
+                 console.log(JSON.stringify(obj));
+                socket.send(JSON.stringify(obj));
+             });
+             $("#moveForward").on("click", function () {
+                 var obj = {data: "MoveForward"};
+                 console.log(obj);
+                 console.log(JSON.stringify(obj));
+                socket.send(JSON.stringify(obj));
+             });
+             $("#moveForward").on("click", function () {
+                 var obj = {data: "MoveForward"};
+                 console.log(obj);
+                 console.log(JSON.stringify(obj));
+                socket.send(JSON.stringify(obj));
+             });
+
+            });
+</script>
+{% endblock %}
