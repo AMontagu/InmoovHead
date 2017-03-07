@@ -1,0 +1,3 @@
+[submodule "InmoovHeadServer/testSpeech"]
+	path = InmoovHeadServer/testSpeech
+	url = /home/droopy/InmoovHead/InmoovHeadServer/testSpeech
