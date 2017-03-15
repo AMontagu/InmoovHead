@@ -110,6 +110,22 @@
                  console.log(JSON.stringify(obj));
                 socket.send(JSON.stringify(obj));
              });
+            $("#speedSlider").on("change", function() {
+                var speed = {speed: $("#speedSlider").val() };
+                console.log($("#speedSlider").val());
+                socket.send(JSON.stringify(speed));
+            });
+            $("#speedSlider").on("input", function() {
+                $("#speedText").val($("#speedSlider").val())
+            });
+            $("#speedText").on('input propertychange paste', function() {
+                $("#speedSlider").val($("#speedText").val())
+                var speed = {speed: $("#speedSlider").val() };
+                console.log($("#speedSlider").val());
+                socket.send(JSON.stringify(speed));
+            });
+
+
 
 
             });

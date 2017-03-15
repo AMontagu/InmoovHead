@@ -38,13 +38,7 @@ class TtsJsonConsumer(JsonWebsocketConsumer):
 		print("disconnect Chat json")
 
 class MovementJson(JsonWebsocketConsumer):
-	"""
-	Handle the groups of all the robots for broadcasting informations to all the robots
-
-	see https://channels.readthedocs.io/en/latest/generics.html
-	"""
 	http_user = True
-	# Set to True if you want them, else leave out
 	strict_ordering = False
 	slight_ordering = False
 
