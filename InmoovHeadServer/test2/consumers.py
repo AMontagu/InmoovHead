@@ -27,7 +27,6 @@ class TtsJsonConsumer(JsonWebsocketConsumer):
 		print(content)
 		tts = Tts("tts", content['data'], "fr")
 		tts.createAndPlay(0.7)
-tts.createAndPlay(0.7)
 
 		self.send("bla self")
 
