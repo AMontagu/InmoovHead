@@ -37,9 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'test2',
     'rest_framework',
     'channels',
+    'test2.apps.Test2Config'
 ]
 
 MIDDLEWARE = [

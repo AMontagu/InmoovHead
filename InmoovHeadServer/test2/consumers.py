@@ -25,9 +25,8 @@ class TtsJsonConsumer(JsonWebsocketConsumer):
 	def receive(self, content, **kwargs):
 		print("receive Chat json :")
 		print(content)
-		tts = Tts("tts.mp3", content['data'], "fr")
-		tts.createSpeech()
-		tts.play_music(0.7)
+		tts = Tts("tts", content['data'], "fr")
+		tts.createAndPlay(0.7)
 
 
 		self.send("bla self")

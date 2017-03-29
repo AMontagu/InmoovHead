@@ -43,3 +43,5 @@ crashlytics-build.properties
 fabric.properties
 
 *.pyc
+
+InmoovHeadServer/testSpeech/sounds/*.mp3
