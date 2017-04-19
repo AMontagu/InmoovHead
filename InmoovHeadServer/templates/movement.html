@@ -80,40 +80,40 @@
             socket.onopen = function () {
                  console.log("socket open");
             };
-             $("#moveForward").on("click", function () {
-                 var obj = {data: "MoveForward"};
+             $("#moveForward").on("click", function (){
+                 var obj = {data: "moveForward",speedvalue: $("#speedSlider").val()};
                  console.log(JSON.stringify(obj));
                 socket.send(JSON.stringify(obj));
              });
              $("#translateLeft").on("click", function () {
-                 var obj = {data: "translateLeft"};
+                 var obj = {data: "translateLeft",speedvalue: $("#speedSlider").val()};
                  console.log(JSON.stringify(obj));
                 socket.send(JSON.stringify(obj));
              });
              $("#translateRight").on("click", function () {
-                 var obj = {data: "translateRight"};
+                 var obj = {data: "translateRight",speedvalue: $("#speedSlider").val()};
                  console.log(JSON.stringify(obj));
                 socket.send(JSON.stringify(obj));
              });
              $("#moveBackward").on("click", function () {
-                 var obj = {data: "moveBackward"};
+                 var obj = {data: "moveBackward",speedvalue: $("#speedSlider").val()};
                  console.log(JSON.stringify(obj));
                 socket.send(JSON.stringify(obj));
              });
             $("#rotateLeft").on("click", function () {
-                 var obj = {data: "rotateLeft"};
+                 var obj = {data: "rotateLeft",speedvalue: $("#speedSlider").val()};
                  console.log(JSON.stringify(obj));
                 socket.send(JSON.stringify(obj));
              });
             $("#rotateRight").on("click", function () {
-                 var obj = {data: "rotateRight"};
+                 var obj = {data: "rotateRight",speedvalue: $("#speedSlider").val()};
                  console.log(JSON.stringify(obj));
                 socket.send(JSON.stringify(obj));
              });
             $("#speedSlider").on("change", function() {
                 var speed = {speed: $("#speedSlider").val() };
                 console.log($("#speedSlider").val());
-                socket.send(JSON.stringify(speed));
+                //socket.send(JSON.stringify(speed));
             });
             $("#speedSlider").on("input", function() {
                 $("#speedText").val($("#speedSlider").val())
@@ -122,7 +122,7 @@
                 $("#speedSlider").val($("#speedText").val())
                 var speed = {speed: $("#speedSlider").val() };
                 console.log($("#speedSlider").val());
-                socket.send(JSON.stringify(speed));
+                //socket.send(JSON.stringify(speed));
             });
 
 
