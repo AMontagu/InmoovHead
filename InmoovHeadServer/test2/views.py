@@ -16,7 +16,7 @@ from rest_framework.views import APIView
 
 from test2.models import Robot
 from test2.serializer import RobotSerializer
-from test2.term import SerialCom
+from test2.motorCommunication import MotorCommunication
 
 
 @login_required
@@ -65,7 +65,7 @@ class RobotViewSet(viewsets.ModelViewSet):
 	queryset = Robot.objects.all()
 	serializer_class = RobotSerializer
 
-@api_view(['POST'])
+""""@api_view(['POST'])
 def apiArduino(request):
 	print(request.data)
 
@@ -89,4 +89,4 @@ def apiArduino(request):
 
 		return Response(status=status.HTTP_200_OK)
 	else:
-		return Response(status=status.HTTP_400_BAD_REQUEST)
+		return Response(status=status.HTTP_400_BAD_REQUEST)"""

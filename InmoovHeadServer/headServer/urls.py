@@ -31,7 +31,7 @@ urlpatterns = [
     url(r'^movement/$', views.movement),
     url(r'^recoVocale/$', views.recoVocale),
     url(r'^admin/', admin.site.urls),
-    url(r'^arduino/', views.apiArduino),
+    # url(r'^arduino/', views.apiArduino),
     url(r'^', include(router.urls)),
     url(r'^accounts/logout/$', auth_views.logout, {'next_page': '/accounts/login/'}),
     url(r'^accounts/', include('django.contrib.auth.urls')),
