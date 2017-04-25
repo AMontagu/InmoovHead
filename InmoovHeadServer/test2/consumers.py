@@ -1,5 +1,6 @@
 import json
 from testSpeech.Tts import Tts
+from test2.motorCommunication import MotorCommunication, SerialCom
 from channels import Group
 from channels.generic.websockets import JsonWebsocketConsumer
 
@@ -28,7 +29,6 @@ class TtsJsonConsumer(JsonWebsocketConsumer):
 		tts = Tts("tts", content['data'], "fr")
 		tts.createAndPlay(0.7)
 
-
 		self.send("bla self")
 
 		Group("bla").send({
@@ -38,6 +38,32 @@ class TtsJsonConsumer(JsonWebsocketConsumer):
 	def disconnect(self, message, **kwargs):
 		print("disconnect Chat json")
 
+
+class MovementJson(JsonWebsocketConsumer):
+	http_user = True
+	strict_ordering = False
+	slight_ordering = False
+
+	def connection_groups(self, **kwargs):
+		print("connection Chat groups json")
+		return ["bla", "bla2"]
+
+	def connect(self, message, **kwargs):
+		print("connect Chat json")
+		self.message.reply_channel.send({"accept": True})
+
+	def receive(self, content, **kwargs):
+		print("receive Chat json :")
+		print(content)
+
+		motorCommunication = MotorCommunication()
+		motorCommunication.sendJson(content)
+
+		"""self.send("bla self")
+
+		Group("bla").send({
+			'text': "bla groups"
+		})"""
 
 def ws_add(message):
 	print("add not in hease protocole :")
