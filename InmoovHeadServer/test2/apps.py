@@ -9,8 +9,13 @@ class Test2Config(AppConfig):
 
 	def ready(self):
 		motorCommunication = MotorCommunication()
-		motorCommunication.start()
-		soundDirName = os.path.join("testSpeech", "sounds")
-		dirSound = os.path.join(BASE_DIR, soundDirName)
-		for f in os.listdir(dirSound):
-			os.remove(os.path.join(dirSound, f))
+		try:
+			motorCommunication.start()
+			soundDirName = os.path.join("testSpeech", "sounds")
+			dirSound = os.path.join(BASE_DIR, soundDirName)
+			for f in os.listdir(dirSound):
+				os.remove(os.path.join(dirSound, f))
+		except FileNotFoundError as e:
+			print (e)
+
+
