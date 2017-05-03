@@ -4,4 +4,57 @@
 
     <h1>Actions</h1>
 
+    <div class="col-md-6">
+        <div class="row">
+          <div class="col-xs-12 containBtnMove">
+            <button id="speak" type="button" data-movement="rotate-left"
+                    class="btn btn-default btn-sm btnArrow"> Speak
+            </button>
+          </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="row">
+          <div class="col-xs-12 containBtnMove">
+            <button id="head" type="button" data-movement="rotate-left"
+                    class="btn btn-default btn-sm btnArrow"> OtherAction
+            </button>
+          </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        jQuery(function ($) {
+
+            var socket = new WebSocket("ws://" + window.location.host + "/ws/movement/");
+            var socketspeak = new WebSocket("ws://" + window.location.host + "/ws/tts/");
+
+            socket.onmessage = function (e) {
+                console.log(e.data);
+            };
+            socket.onopen = function () {
+                 console.log("socket open");
+            };
+             $("#speak").on("click", function (){
+                 var obj = {action: "jawdown",degrees: "50"};
+                 console.log(JSON.stringify(obj));
+                socket.send(JSON.stringify(obj));
+                var obj = {data: "Bonjour"};
+                 console.log(JSON.stringify(obj));
+                socketspeak.send(JSON.stringify(obj));
+                 var obj = {action: "jawup",degrees: "50"};
+                 console.log(JSON.stringify(obj));
+                socket.send(JSON.stringify(obj));
+             });
+             $("#eyesleft").on("click", function () {
+                 var obj = {action: "eyesleft",degrees: $("#speedSlider").val()};
+                 console.log(JSON.stringify(obj));
+                socket.send(JSON.stringify(obj));
+             });
+
+        });
+    </script>
 {% endblock %}
