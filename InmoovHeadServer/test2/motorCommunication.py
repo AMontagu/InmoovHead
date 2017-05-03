@@ -32,8 +32,9 @@ class SerialCom(threading.Thread):
 				if p.startswith('/dev/tty') and p != '/dev/ttyAMA0':
 					print("start with good start")
 					self.available = True
-		if len(availablePort) > 0:
-			self.available = True
+		else:
+			if len(availablePort) > 0:
+				self.available = True
 		if self.available:
 			try:
 				self.ser = serial.Serial(
