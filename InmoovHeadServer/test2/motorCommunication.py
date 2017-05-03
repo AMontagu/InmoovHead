@@ -3,6 +3,7 @@ import time
 import serial
 import sys
 import glob
+from headServer.settings import LINUX
 
 
 class Singleton(type):
@@ -17,6 +18,8 @@ class Singleton(type):
 class SerialCom(threading.Thread):
 	def __init__(self, port='COM3', baudrate=9600, parity=serial.PARITY_NONE,
 	             stopbits=serial.STOPBITS_ONE, bytesize=serial.EIGHTBITS):
+		if LINUX:
+			port = 'tty0'
 		print("created")
 		super(SerialCom, self).__init__(daemon=True)
 		self.running = True
@@ -24,10 +27,11 @@ class SerialCom(threading.Thread):
 		self.available = False
 		availablePort = self.serial_ports()
 		print(availablePort)
-		"""for p in availablePort:
-			if p.startswith('/dev/tty'):
-				print("start with good start")
-				self.available = True"""
+		if LINUX:
+			for p in availablePort:
+				if p.startswith('/dev/tty'):
+					print("start with good start")
+					self.available = True
 		if len(availablePort) > 0:
 			self.available = True
 		if self.available:
