@@ -29,7 +29,7 @@ class SerialCom(threading.Thread):
 		print(availablePort)
 		if LINUX:
 			for p in availablePort:
-				if p.startswith('/dev/tty'):
+				if p.startswith('/dev/tty') and p != '/dev/ttyAMA0':
 					print("start with good start")
 					self.available = True
 		if len(availablePort) > 0:
