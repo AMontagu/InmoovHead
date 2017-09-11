@@ -12,11 +12,11 @@ server {
        
 
     location /media  {
-        alias /home/pi/Inmoovhead/InmoovHead/InmoovHeadServer/media;
+        alias /home/pi/InmoovHead/InmoovHeadServer/media;
     }
 
     location /static {
-        alias /home/pi/Inmoovhead/InmoovHead/InmoovHeadServer/static;
+        alias /home/pi/InmoovHead/InmoovHeadServer/static;
     }
 
     location / {
