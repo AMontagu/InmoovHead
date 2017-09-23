@@ -26,7 +26,7 @@ class SerialCom(threading.Thread):
 		self.available = False
 		availablePort = self.serial_ports()
 		print(availablePort)
-		if not ARDUINOPLUG:
+		if ARDUINOPLUG:
 			if LINUX:
 				for p in availablePort:
 					if p.startswith('/dev/tty') and p != '/dev/ttyAMA0':
@@ -36,6 +36,7 @@ class SerialCom(threading.Thread):
 				if len(availablePort) > 0:
 					self.available = True
 		else:
+			print("ici")
 			self.available = False
 		if self.available:
 			try:
