@@ -1,5 +1,3 @@
-import os
-
 import pygame as pg
 from gtts import gTTS
 
@@ -42,5 +40,9 @@ class Tts:
 		pg.mixer.quit()
 
 		counter += 1
+
+if __name__ == "__main__":
+	tts = Tts("test", "salut petit coquin", "fr")
+	tts.createAndPlay(100)
 
 

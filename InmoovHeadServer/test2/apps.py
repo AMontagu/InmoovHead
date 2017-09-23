@@ -17,5 +17,6 @@ class Test2Config(AppConfig):
 				os.remove(os.path.join(dirSound, f))
 		except FileNotFoundError as e:
 			print (e)
+		pass
 
 

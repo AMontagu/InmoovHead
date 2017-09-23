@@ -30,6 +30,7 @@ SECRET_KEY = 'k*2z-e*lgrr4gb+f6y2%fp*5d8d6*ly*qkewl*a^cht7&3^fcs'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+ARDUINOPLUG = False
 
 ALLOWED_HOSTS = ['*']
 

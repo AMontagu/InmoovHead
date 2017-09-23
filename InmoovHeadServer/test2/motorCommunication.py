@@ -3,7 +3,7 @@ import time
 import serial
 import sys
 import glob
-from headServer.settings import LINUX
+from headServer.settings import LINUX, ARDUINOPLUG
 
 
 class Singleton(type):
@@ -16,8 +16,7 @@ class Singleton(type):
 
 
 class SerialCom(threading.Thread):
-	def __init__(self, port='COM3', baudrate=9600, parity=serial.PARITY_NONE,
-	             stopbits=serial.STOPBITS_ONE, bytesize=serial.EIGHTBITS):
+	def __init__(self, port='COM3', baudrate=9600, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE, bytesize=serial.EIGHTBITS):
 		if LINUX:
 			port = 'tty0'
 		print("created")
@@ -27,14 +26,17 @@ class SerialCom(threading.Thread):
 		self.available = False
 		availablePort = self.serial_ports()
 		print(availablePort)
-		if LINUX:
-			for p in availablePort:
-				if p.startswith('/dev/tty') and p != '/dev/ttyAMA0':
-					print("start with good start")
+		if not ARDUINOPLUG:
+			if LINUX:
+				for p in availablePort:
+					if p.startswith('/dev/tty') and p != '/dev/ttyAMA0':
+						print("start with good start")
+						self.available = True
+			else:
+				if len(availablePort) > 0:
 					self.available = True
 		else:
-			if len(availablePort) > 0:
-				self.available = True
+			self.available = False
 		if self.available:
 			try:
 				self.ser = serial.Serial(
@@ -52,21 +54,25 @@ class SerialCom(threading.Thread):
 				print(e)
 
 		else:
-			print("no port available")
+			print("no arduino available")
 			self.ser = None
 
 	def run(self):
 		while self.running:
-			self.open = self.initSerial()
+			if self.available:
+				self.open = self.initSerial()
 
-			try:
-				while self.open:
-					input = self.ser.readline()
-					if(input != ""):
-						print(bytes.decode(input))
-			except IOError:
-				pass
-			self.closeSerial()
+				try:
+					while self.open:
+						input = self.ser.readline()
+						if(input != ""):
+							print(bytes.decode(input))
+				except IOError:
+					pass
+				self.closeSerial()
+			else:
+				#TODO CHECK IF NEW ARDUINO CARD PLUGGED IN EVERY 3 SECONDS SOR SOMETHING LIKE THAT
+				self.running = False
 
 	def write(self, data):
 		if self.open:
@@ -78,7 +84,7 @@ class SerialCom(threading.Thread):
 
 	def initSerial(self):
 		if self.available:
-			self.ser.isOpen()
+			self.ser.open()
 			self.open = True
 		return self.open
 
