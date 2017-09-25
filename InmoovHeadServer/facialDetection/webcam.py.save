@@ -1,6 +1,28 @@
+import threading
+
 import cv2
 import numpy
 from testSpeech.Tts import Tts
+
+class Singleton(type):
+	_instances = {}
+
+	def __call__(cls, *args, **kwargs):
+		if cls not in cls._instances:
+			cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
+		return cls._instances[cls]
+
+class FacialDetection(threading.Thread, metaclass=Singleton):
+	def __init__(self):
+		super(FacialDetection, self).__init__(daemon=True)
+
+	def sendJson(self, json):
+		if not isinstance(json, str):
+			json = str(json)
+		self.write(bytes(json, "utf-8"))
+
+	def sendMove(self, motorNumber, position):
+		json = {"motorNumber": motorNumber, "position": position}
 
 cascPath = eval(input())
 faceCascade = cv2.CascadeClassifier(cascPath)
