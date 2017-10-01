@@ -1,31 +1,14 @@
-from headServer.settings import BASE_DIR
-
-if __name__ == "__main__":
-	main = True
-else:
-	main = False
-
-import threading
 import cv2
 import numpy
-import os
+import threading
 
-if not main:
-	from testSpeech.Tts import Tts
-
-class Singleton(type):
-	_instances = {}
-
-	def __call__(cls, *args, **kwargs):
-		if cls not in cls._instances:
-			cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
-		return cls._instances[cls]
-
-class FacialDetection(threading.Thread, metaclass=Singleton):
+class FacialDetection(threading.Thread):
 	def __init__(self):
-		super(FacialDetection, self).__init__()
 
-		cascPath = os.path.join(BASE_DIR, "facialDetection", "haarcascade_frontalface_default.xml")
+		super(FacialDetection, self).__init__()
+		#self.daemon = True
+
+		cascPath = "haarcascade_frontalface_default.xml"
 		self.faceCascade = cv2.CascadeClassifier(cascPath)
 
 		self.video_capture = cv2.VideoCapture(0)
@@ -42,7 +25,6 @@ class FacialDetection(threading.Thread, metaclass=Singleton):
 			gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
 			count = 0
-
 			faces = self.faceCascade.detectMultiScale(
 				gray,
 				scaleFactor=1.1,
@@ -61,28 +43,15 @@ class FacialDetection(threading.Thread, metaclass=Singleton):
 			cv2.imshow('Video', frame)
 
 			print('count : ' + str(count))
-			#print(self.time)
+			print(self.time)
 			self.total += count
 			self.time += 1
-			print('time :'+ str(self.time))
+			print(self.time)
 			if self.time > 60:
-				print('total :'+ str(self.total))
+				print(self.total)
 				#break
-
-			if main == False:
-				if self.total > 0 and self.time > 500:
-					numberFace = int(numpy.around(self.total / self.time))
-					if numberFace == 0 :
-						numberFace = "une"
-					tts = Tts("tts.mp3", "Bonjour je detecte" + str(numberFace) + 'personne', "fr")
-					tts.createAndPlay(0.7)
-					self.total = 0
-					self.time = 0
-
 			if cv2.waitKey(1) & 0xFF == ord('q'):
 				break
-
-
 
 		self.video_capture.release()
 		cv2.destroyAllWindows()

@@ -1,6 +1,11 @@
 from channels.routing import route, include, route_class
 from test2.consumers import ws_add, ws_message, ws_disconnect, TtsJsonConsumer, MovementJson
 
+from facialDetection.webcam import FacialDetection
+
+facialDetection = FacialDetection()
+facialDetection.start()
+
 apiSocket = [
 	route_class(TtsJsonConsumer, path=r"^/tts/"),
 	route_class(MovementJson, path=r"^/movement/"),

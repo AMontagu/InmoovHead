@@ -3,7 +3,6 @@ import os
 from headServer.settings import BASE_DIR
 from test2.motorCommunication import MotorCommunication
 
-
 class Test2Config(AppConfig):
 	name = 'test2'
 
