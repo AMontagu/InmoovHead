@@ -31,6 +31,7 @@ class FacialDetection(threading.Thread, metaclass=Singleton):
 		self.video_capture = cv2.VideoCapture(0)
 		self.time = 0
 		self.total = 0
+		self.countTable = []
 
 		self.running = True
 
@@ -55,7 +56,7 @@ class FacialDetection(threading.Thread, metaclass=Singleton):
 			for (x, y, w, h) in faces:
 				cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
 				count += 1
-
+			self.countTable.append(count)
 
 			# Display the resulting frame
 			cv2.imshow('Video', frame)
@@ -69,7 +70,7 @@ class FacialDetection(threading.Thread, metaclass=Singleton):
 				print('total :'+ str(self.total))
 				#break
 
-			if main == False:
+			'''if main == False:
 				if self.total > 0 and self.time > 500:
 					numberFace = int(numpy.around(self.total / self.time))
 					if numberFace == 0 :
@@ -77,9 +78,32 @@ class FacialDetection(threading.Thread, metaclass=Singleton):
 					tts = Tts("tts.mp3", "Bonjour je detecte" + str(numberFace) + 'personne', "fr")
 					tts.createAndPlay(0.7)
 					self.total = 0
-					self.time = 0
+					self.time = 0'''
+			if main == False:
+				if self.countTable.count(1) > 0 and self.time > 240 :
+					self.countTable.remove(0)
+					#on parcours la table qui a permis de stocker le nombre de visage trouver durant les 240ms
+					i = 1
+					while self.countTable.count(i) > 0 :
+						i += 1
+					facesPourcent = self.countTable.count(i) / len(self.countTable)
+					if facesPourcent < 0.2:
+						i -= 1
+						#comme on est en dessous des 20% on passe au nombre de visage en dessous jusqu'à etre au dessu du taux demandé
+						while facesPourcent < 0.2:
+							facesPourcent = self.countTable.count(i) / len(self.countTable)
+							i -= 1
+					numberFace = i
+					if i == 1:
+						numberFace = 'une'
+					tts = Tts("tts.mp3", "Bonjour je detecte" + str(numberFace) + 'personne', "fr")
+					tts.createAndPlay(0.7)
+					self.countTable = []
 
 			if cv2.waitKey(1) & 0xFF == ord('q'):
+				print(self.countTable.count(1))
+				print(self.countTable.count(2))
+				print(self.countTable)
 				break
 
 
