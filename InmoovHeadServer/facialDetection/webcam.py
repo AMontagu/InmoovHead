@@ -23,6 +23,7 @@ class Singleton(type):
 class FacialDetection(threading.Thread, metaclass=Singleton):
 	def __init__(self):
 		super(FacialDetection, self).__init__()
+		console.log("IJHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHKG")
 
 		if not main:
 			cascPath = os.path.join(BASE_DIR, "facialDetection", "haarcascade_frontalface_default.xml")

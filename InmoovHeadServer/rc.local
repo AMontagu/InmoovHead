@@ -5,6 +5,8 @@ exec 1>&2
 
 set -x
 
+modprobe bcm2835-v4l2
+
 . /home/pi/.virtualenvs/cv/bin/activate
 cd /home/pi/InmoovHead/InmoovHeadServer
 uwsgi --ini server_uwsgi.ini &
