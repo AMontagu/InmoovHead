@@ -56,14 +56,14 @@ class FacialDetection(threading.Thread, metaclass=Singleton):
 
 			# Draw a rectangle around the faces
 			for (x, y, w, h) in faces:
-				cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+				#cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
 				count += 1
 			self.countTable.append(count)
 
 			# Display the resulting frame
-			cv2.imshow('Video', frame)
+			#cv2.imshow('Video', frame)
 
-			#print('count : ' + str(count))
+			print('count : ' + str(count))
 			#print(self.time)
 			self.total += count
 			self.time += 1
@@ -82,10 +82,10 @@ class FacialDetection(threading.Thread, metaclass=Singleton):
 					self.total = 0
 					self.time = 0'''
 			if main == False:
-				if self.countTable.count(1) > 0 and self.time > 240 :
+				if self.countTable.count(1) > 0 and self.time > 120 :
 					#if self.countTable.count(0) > 0:
 						#self.countTable.remove(0)
-					#on parcours la table qui a permis de stocker le nombre de visage trouver durant les 240ms
+					#on parcours la table qui a permis de stocker le nombre de visage trouver durant les 120 frame
 					i = 1
 					while self.countTable.count(i) > 0 :
 						i += 1
@@ -100,7 +100,7 @@ class FacialDetection(threading.Thread, metaclass=Singleton):
 					if i == 1:
 						numberFace = 'une'
 					if i > 0:
-						tts = Tts("tts.mp3", "Bonjour je detecte" + str(numberFace) + 'personne', "fr")
+						tts = Tts("tts", "Bonjour je detecte" + str(numberFace) + 'personne', "fr")
 						tts.createAndPlay(0.7)
 					self.time = 0
 					self.countTable = []
