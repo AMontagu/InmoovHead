@@ -1,5 +1,3 @@
-from headServer.settings import BASE_DIR
-
 if __name__ == "__main__":
 	main = True
 else:
@@ -12,6 +10,7 @@ import os
 
 if not main:
 	from testSpeech.Tts import Tts
+	from headServer.settings import BASE_DIR
 
 class Singleton(type):
 	_instances = {}
@@ -25,7 +24,10 @@ class FacialDetection(threading.Thread, metaclass=Singleton):
 	def __init__(self):
 		super(FacialDetection, self).__init__()
 
-		cascPath = os.path.join(BASE_DIR, "facialDetection", "haarcascade_frontalface_default.xml")
+		if not main:
+			cascPath = os.path.join(BASE_DIR, "facialDetection", "haarcascade_frontalface_default.xml")
+		else:
+			cascPath = "haarcascade_frontalface_default.xml"
 		self.faceCascade = cv2.CascadeClassifier(cascPath)
 
 		self.video_capture = cv2.VideoCapture(0)
@@ -61,13 +63,13 @@ class FacialDetection(threading.Thread, metaclass=Singleton):
 			# Display the resulting frame
 			cv2.imshow('Video', frame)
 
-			print('count : ' + str(count))
+			#print('count : ' + str(count))
 			#print(self.time)
 			self.total += count
 			self.time += 1
-			print('time :'+ str(self.time))
-			if self.time > 60:
-				print('total :'+ str(self.total))
+			#print('time :'+ str(self.time))
+			#if self.time > 60:
+				#print('total :'+ str(self.total))
 				#break
 
 			'''if main == False:
@@ -81,23 +83,26 @@ class FacialDetection(threading.Thread, metaclass=Singleton):
 					self.time = 0'''
 			if main == False:
 				if self.countTable.count(1) > 0 and self.time > 240 :
-					self.countTable.remove(0)
+					#if self.countTable.count(0) > 0:
+						#self.countTable.remove(0)
 					#on parcours la table qui a permis de stocker le nombre de visage trouver durant les 240ms
 					i = 1
 					while self.countTable.count(i) > 0 :
 						i += 1
 					facesPourcent = self.countTable.count(i) / len(self.countTable)
 					if facesPourcent < 0.2:
-						i -= 1
 						#comme on est en dessous des 20% on passe au nombre de visage en dessous jusqu'à etre au dessu du taux demandé
 						while facesPourcent < 0.2:
-							facesPourcent = self.countTable.count(i) / len(self.countTable)
 							i -= 1
+							facesPourcent = self.countTable.count(i) / len(self.countTable)
+							print(facesPourcent, self.countTable.count(i), len(self.countTable))
 					numberFace = i
 					if i == 1:
 						numberFace = 'une'
-					tts = Tts("tts.mp3", "Bonjour je detecte" + str(numberFace) + 'personne', "fr")
-					tts.createAndPlay(0.7)
+					if i > 0:
+						tts = Tts("tts.mp3", "Bonjour je detecte" + str(numberFace) + 'personne', "fr")
+						tts.createAndPlay(0.7)
+					self.time = 0
 					self.countTable = []
 
 			if cv2.waitKey(1) & 0xFF == ord('q'):
